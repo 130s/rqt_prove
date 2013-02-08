@@ -1,0 +1,12 @@
+<library path="src">
+  <class name="Param" type="prove.treeview_plugin.ProveTreeviewPlugin" base_class_type="rqt_gui_py::Plugin">
+    <description>
+      Proving Treeview plugin
+    </description>
+    <qtgui>
+      <label>Prove treeview plugin</label>
+      <icon type="theme">accessories-text-editor</icon>
+      <statustip>Proving Treeview functionalities</statustip>
+    </qtgui>
+  </class>
+</library>
