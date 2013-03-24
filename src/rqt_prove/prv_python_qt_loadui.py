@@ -4,31 +4,29 @@ import os
 import sys
 
 setattr(sys, 'SELECT_QT_BINDING',
-        #'pyside')
-        'pyqt')
-from python_qt_binding.QtCore import QModelIndex, QPersistentModelIndex, Qt
+        'pyside')
+        #'pyqt')
+from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtGui import (QApplication, QItemSelectionModel,
-                          QMainWindow, QStandardItem,
-                          QStandardItemModel, QTreeView, QWidget)
+                          QStandardItem, QStandardItemModel, QWidget)
 from python_qt_binding import loadUi
-#from PyQt4.uic import loadUi
+
+from rqt_prove.qview_custom import CustomQTreeview
 
 import rospkg
 
 
-class TreeviewWidgetSelectProve(QMainWindow):
+class TreeviewWidgetSelectProve(QWidget):
 
     def __init__(self):
         super(TreeviewWidgetSelectProve, self).__init__()
-        #self.uiw = loadUi("~/link/ROS/groovy_quantal/catkin_ws/src/rqt_prove/resource/treeview.ui")
-        #self.uiw = loadUi("/resource/treeview.ui")
-
-        #self.uiw = loadUi("/home/n130s/link/ROS/groovy_quantal/catkin_ws/src/rqt_prove/resource/treeview4.ui")
 
         rp = rospkg.RosPack()
-        ui_file = os.path.join(rp.get_path('rqt_prove'),
-                               'resource', 'treeview4.ui')
-        self.uiw = loadUi(ui_file)
+        ui_file = os.path.join(rp.get_path('rqt_prove'), 'resource',
+                               #'treeview_non_custom.ui')  # Works with pyqt.
+                               'treeview_with_custom.ui')  # No good.
+        #loadUi(ui_file, self)
+        loadUi(ui_file, self, {'CustomQTreeview': CustomQTreeview})
 
         self._std_model = QStandardItemModel()
         self._rootitem = self._std_model.invisibleRootItem()
@@ -39,14 +37,14 @@ class TreeviewWidgetSelectProve(QMainWindow):
 
         print('_rootitem index={}'.format(self._rootitem.index()))
 
-        self.uiw._treeview.setModel(self._std_model)
-        self.selectionModel = self.uiw._treeview.selectionModel()
+        self.treeview.setModel(self._std_model)
+        self.selectionModel = self.treeview.selectionModel()
         self.selectionModel.selectionChanged.connect(
                                                  self._selection_changed_slot)
 
         print('del/sel?\tde/sel index\tde/sel.row\tde/sel.dat\tparent\tinternal id')
 
-        self.uiw.show()
+        self.show()
 
     def _selection_changed_slot(self, selected, deselected):
         """

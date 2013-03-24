@@ -7,7 +7,7 @@ import subprocess
 
 def pv_list_comprehension():
     names = ['a', 'b', 'c', 'c']
-    names_chosen = [n for n in names if n == 'c']
+    names_chosen = [n for n in names if n =='c']
     print 'len={}'.format(len(names_chosen))
 
 
@@ -21,7 +21,7 @@ def prv_isspace():
     if (not str) or (str.isspace()):
         print 'recognized as empty'
     else:
-        print 'Not recognized as empty'
+        print 'Not recognized as empty                                             '      
 
 
 def prv_dict_loop():
@@ -36,57 +36,29 @@ def prv_dict_loop():
 
 
 def prv_elemtree():
-    tree = ET.parse("pr2_bringup.launch")
+    tree = ET.parse("test.xml")
     print tree
 
     doc = tree.getroot()
     print doc.attrib
-    #thingies = tree.findall('arg')
-    thingies = tree.findall('include')
+    thingies = tree.findall('arg')
     #print thingy.attrib
-    for thingy in thingies:
-        print thingy.attrib
-
-    node = 'node'
-    print 'from here: {}'.format(node)
-    thingies = tree.findall(node)
     for thingy in thingies:
         print thingy.attrib
 
 
 def prv_os_usage():
     """Return int containing memory used by user's processes."""
-    username = 'n130s'
-    process = subprocess.Popen(\
-         "ps -u {} -o rss | awk '{sum+=$1} END {print sum}'".format(username),
-         shell=True, stdout=subprocess.PIPE)
+    username = 'isaito'
+    process = subprocess.Popen("ps -u %s -o rss | awk '{sum+=$1} END {print sum}'" % username,
+                               shell=True, stdout=subprocess.PIPE)
     stdout_list = process.communicate()[0].split('\n')
     print stdout_list
     print int(stdout_list[0])
 
 
-def prv_str_dict_conversion():
-    val_a = object
-    str = 'sample str'
-    dict = {'key_a': val_a}
-    print 'before: {}'.format(str)
-    str = dict
-    print 'after: {}'.format(str)
-
-
-def prv_if_obj():
-    list_obj = [None, 'a', 'b']
-    for i in list_obj:
-        if not i:
-            print 'none?'
-        else:
-            print i
-
-
 if __name__ == '__main__':
-    prv_if_obj()
-    #prv_str_dict_conversion()
-    #prv_os_usage()
+    prv_os_usage()
     #prv_elemtree()
     #prv_dict_loop()
     #prv_isspace()

@@ -32,38 +32,47 @@
 #
 # Author: Isaac Saito
 
-import time
+import sys
+import threading
+from time import sleep
 
-import dynamic_reconfigure as dyn_reconf
-import dynamic_reconfigure.client
-import rosservice
-import rospy
+from PyQt4.QtGui import QApplication, QWidget
 
-from rqt_reconfigure.treenode_qstditem import TreenodeQstdItem
 
+class ThreadArg(object):
+    def __init__(self):
+        self._val = None
+
+    def set_val(self, val):
+        self._val = val
+
+    def get_val(self):
+        return self._val
+
+
+class PrvThreadGen(threading.Thread):
+
+    def __init__(self, thread_obj):
+        super(PrvThreadGen, self).__init__()
+
+        self._condition_variable = threading.Condition()
+        self._configs_pending = {}
+        self._timestamp_last_pending = None
+        self._stop_flag = False
+        print ' Thread initted'
+        self._thread_obj = thread_obj
+
+    def run(self):
+        _timestamp_last_commit = None
+        print ' Thread started'
+        val = QWidget()
+        self._thread_obj.set_val(val)
 
 if __name__ == '__main__':
-    try:
-        nodes = dyn_reconf.find_reconfigure_services()
-    except rosservice.ROSServiceIOException as e:
-        rospy.logerr("Reconfigure GUI cannot connect to master.")
-        raise e  # TODO Make sure 'raise' here returns or finalizes func.
-
-    i_node_curr = 1
-    num_nodes = len(nodes)
-    elapsedtime_overall = 0.00
-    for node_name_grn in nodes:
-        time_siglenode_loop = time.time()
-
-        try:
-            _dynreconf_client = dynamic_reconfigure.client.Client(
-                                               str(node_name_grn), timeout=5.0)
-        except rospy.exceptions.ROSException:
-            rospy.logerr("TreenodeQstdItem. Couldn't connect to {}".format(
-                                                               node_name_grn))
-        time_siglenode_loop = time.time() - time_siglenode_loop
-        elapsedtime_overall += time_siglenode_loop
-        rospy.loginfo('{}th node. elapsed {} / {} sec'.format(i_node_curr,
-                                                round(time_siglenode_loop, 2),
-                                                round(elapsedtime_overall, 2)))
-        i_node_curr += 1
+    import sys
+    app = QApplication(sys.argv)
+    obj = ThreadArg()
+    main = PrvThreadGen(obj)
+    main.start()
+    sleep(10)
+    print ' val={}'.format(obj.get_val())

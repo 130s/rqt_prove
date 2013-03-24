@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>_top</class>
+ <widget class="LoaduiProve" name="_top">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>485</width>
+    <height>221</height>
+   </rect>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>-1</x>
+     <y>9</y>
+     <width>481</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="CustomQTableview" name="tableView"/>
+    </item>
+    <item>
+     <widget class="CustomQTreeview" name="treeView"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+   <customwidget>
+   <class>LoaduiProve</class>
+   <extends>QWidget</extends>
+   <header>rqt_prove.prv_python_qt_binding_pyside_loadui</header>
+  </customwidget>
+  <customwidget>
+   <class>CustomQTableview</class>
+   <extends>QTableView</extends>
+   <header>rqt_prove.qview_custom</header>
+  </customwidget>
+  <customwidget>
+   <class>CustomQTreeview</class>
+   <extends>QTreeView</extends>
+   <header>rqt_prove.qview_custom</header>
+  </customwidget>
+  <customwidget>
+   <class>TreeviewWidgetSelectProve</class>
+   <extends>QWidget</extends>
+   <header>treeviewwidgetselectprove.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
