@@ -34,7 +34,7 @@
 
 import sys
 import threading
-from time import sleep
+from time import sleep, time
 
 from PyQt4.QtGui import QApplication, QWidget
 
@@ -68,11 +68,26 @@ class PrvThreadGen(threading.Thread):
         val = QWidget()
         self._thread_obj.set_val(val)
 
-if __name__ == '__main__':
-    import sys
-    app = QApplication(sys.argv)
+
+def simple_thread_run():
     obj = ThreadArg()
     main = PrvThreadGen(obj)
     main.start()
     sleep(10)
     print ' val={}'.format(obj.get_val())
+
+
+def many_thread_run():
+    time_begin = time() * 1000
+    for i in range(900):
+        obj = ThreadArg()
+        main = PrvThreadGen(obj)
+        main.start()
+        print ' #{}'.format(i)
+    print ' time took={}'.format(time() - time_begin)
+
+
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+    many_thread_run()

@@ -83,8 +83,34 @@ def prv_if_obj():
             print i
 
 
+class PrvPydevAutocompletion(object):
+    def __init__(self):
+        pass
+
+    def method1(self):
+        pass
+
+    def method2(self):
+        pass
+
+
+def prv_pydev_autocompletion_return():
+    """
+    @rtype: prove_general.PrvPydevAutocompletion
+    """
+    p = PrvPydevAutocompletion()
+    return p
+
+
+def prv_pydev_autocompletion():
+    s = prv_pydev_autocompletion_return()
+
+
+
+
 if __name__ == '__main__':
-    prv_if_obj()
+    prv_pydev_autocompletion()
+    #prv_if_obj()
     #prv_str_dict_conversion()
     #prv_os_usage()
     #prv_elemtree()
