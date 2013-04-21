@@ -3,6 +3,7 @@
   <name>rqt_prove</name>
   <version>0.0.0</version>
   <description>rqt_prove package is a proving ground for development.
+  This line is for EGit test.
   </description>
 
   <maintainer email="isaito@todo.todo">isaito</maintainer>
