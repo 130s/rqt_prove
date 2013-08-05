@@ -3,6 +3,10 @@ import xml.etree.ElementTree as ET
 import os
 from pydoc import doc
 import subprocess
+import time
+
+import rospy
+from std_msgs.msg import String
 
 
 def pv_list_comprehension():
@@ -106,10 +110,63 @@ def prv_pydev_autocompletion():
     s = prv_pydev_autocompletion_return()
 
 
+def prv_rm_list_elem():
+    list = ['a', 'b', 'c', 'd', 'b', 'e']
+    list = [x for x in list if x != 'f']
+    print list
+
+
+_list_prv_global_var = []
+def prv_global_var1():
+    _list_prv_global_var.append('elem1')
+
+
+def prv_global_var1_1():
+    print 'dummy'
+
+
+def prv_global_var2():
+    prv_global_var1()
+    print 'list={}'.format(_list_prv_global_var)
+
+
+def prv_dyn_import():
+    rn = __import__('rosnode')
+    print 'before={}'.format(rn)
+    print rn.rosnode_ping('/turtlesim', 1)
+    del rn
+    #print 'before={}'.format(rn)
+
+
+def prv_sum():
+    a = range(11)
+    print sum(a)
+
+
+def prv_slicing():
+    a = range(11)
+    print a[:5]
+    print a[5+1:]
+
+
+def prv_sleep():
+    '''To see if cpu process is made while running python'''
+    print 'before sleep'
+    time.sleep(15)
+    rospy.init_node('node_name')
+    rospy.Subscriber("chatter", String, prv_sleep_callback)
+
+    print 'after sleep'
+    time.sleep(15)
+
+
+def prv_sleep_callback(data):
+    rospy.loginfo("I heard %s", data.data)
 
 
 if __name__ == '__main__':
-    prv_pydev_autocompletion()
+    prv_sleep()
+
     #prv_if_obj()
     #prv_str_dict_conversion()
     #prv_os_usage()
